@@ -15,6 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.2"
+  carousel_slider:
+    dependency: "direct main"
+    description:
+      name: carousel_slider
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
   characters:
     dependency: transitive
     description:
@@ -43,13 +50,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0-nullsafety.4"
-  cupertino_icons:
-    dependency: "direct main"
+  fading_edge_scrollview:
+    dependency: transitive
     description:
-      name: cupertino_icons
+      name: fading_edge_scrollview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.4"
   fake_async:
     dependency: transitive
     description:
@@ -67,6 +74,27 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  hijri:
+    dependency: "direct main"
+    description:
+      name: hijri
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.3"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.16.1"
+  marquee:
+    dependency: "direct main"
+    description:
+      name: marquee
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.0"
   matcher:
     dependency: transitive
     description:
@@ -150,4 +178,4 @@ packages:
     source: hosted
     version: "2.1.0-nullsafety.4"
 sdks:
-  dart: ">=2.12.0-0 <=2.12.0-3.0.dev"
+  dart: ">=2.11.0-0.0 <=2.12.0-3.0.dev"
