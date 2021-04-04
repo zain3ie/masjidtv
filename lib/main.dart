@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masjid_tv/views/main/main_display.dart';
+import 'package:masjid_tv/views/settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainDisplay(),
+      home: Settings(),
     );
   }
 }
