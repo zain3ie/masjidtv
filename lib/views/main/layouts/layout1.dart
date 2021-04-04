@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masjid_tv/views/main/components/carousel.dart';
 import 'package:masjid_tv/views/main/components/header.dart';
-import 'package:masjid_tv/views/main/components/parayer_time.dart';
+import 'package:masjid_tv/views/main/components/prayer_time.dart';
 import 'package:masjid_tv/views/main/components/running_text.dart';
 
 class Layout1 extends StatelessWidget {
@@ -13,7 +13,7 @@ class Layout1 extends StatelessWidget {
         Expanded(
           child: Carousel(),
         ),
-        PrayerTime(),
+        PrayerTime(layout: 'row'),
         RunningText()
       ],
     );

@@ -54,7 +54,7 @@ class PrayerTime extends StatelessWidget {
           Expanded(
             child: PrayerTimeWidget(
               layout: 'column',
-              title: 'Magrib',
+              title: 'Maghrib',
               time: '16:12',
               color: Colors.redAccent
             ),
