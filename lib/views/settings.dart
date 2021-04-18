@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masjid_tv/models/city_model.dart';
-import 'package:masjid_tv/models/prayer_time_model.dart';
+import 'package:masjid_tv/models/ptime_model.dart';
 import 'package:masjid_tv/services/city_service.dart';
-import 'package:masjid_tv/services/prayer_time_service.dart';
+import 'package:masjid_tv/services/ptime_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Settings extends StatelessWidget {
@@ -42,12 +42,12 @@ class Settings extends StatelessWidget {
         //   }
         // ),
         child: FutureBuilder(
-          future: getPrayerTime(),
+          future: getPTime(),
           builder: (context, snapshot) {
             if (snapshot.hasError) print(snapshot.error);
 
             if (snapshot.hasData) {
-              PrayerTime prayerTime = snapshot.data;
+              PTime prayerTime = snapshot.data;
 
               return Column(
                 children: [

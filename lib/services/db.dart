@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:masjid_tv/models/prayer_time_model.dart';
+import 'package:intl/intl.dart';
+import 'package:masjid_tv/models/ptime_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -55,15 +56,18 @@ class DBProvider {
 	
 	selectPrayerTime() async {
 		final db = await database;
-		var _result = await db.query(tablePrayerTime);
+		var _result = await db.query(tablePrayerTime,
+			where: '$columnDate = ?',
+			whereArgs: [DateFormat('MM-dd').format(DateTime.now())]
+		);
 		
-		List<PrayerTime> _list = _result.isNotEmpty
-			? _result.map((c) => PrayerTime.fromJson(c)).toList() : [];
+		PTime prayerTime = _result.isNotEmpty
+			? PTime.fromMap(_result.first) : PTime;
 		
-		return _list;
+		return prayerTime;
 	}
 	
-	insertPrayerTime(PrayerTime prayerTime) async {
+	insertPrayerTime(PTime prayerTime) async {
 		final db = await database;
 		await db.insert(tablePrayerTime, prayerTime.toMap());
 	}

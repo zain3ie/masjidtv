@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:masjid_tv/models/ptime_model.dart';
+import 'package:masjid_tv/services/db.dart';
 
 class PrayerTime extends StatelessWidget {
   final String layout;
@@ -13,63 +15,84 @@ class PrayerTime extends StatelessWidget {
     return Container(
       color: Colors.black,
       padding: EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: 'Imsak',
-              time: '04:39',
-              color: Colors.indigoAccent
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: 'Subuh',
-              time: '04:49',
-              color: Colors.blueAccent
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: 'Dzuhur',
-              time: '12:08',
-              color: Colors.yellow[700]
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: '\'Ashar',
-              time: '15:18',
-              color: Colors.orangeAccent
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: 'Maghrib',
-              time: '16:12',
-              color: Colors.redAccent
-            ),
-          ),
-          SizedBox(height: 8.0),
-          Expanded(
-            child: PrayerTimeWidget(
-              layout: 'column',
-              title: 'Isya',
-              time: '19:00',
-              color: Colors.purpleAccent
-            ),
-          )
-        ],
+      child: FutureBuilder(
+        future: DBProvider.db.selectPrayerTime(),
+        builder: (context, snapshot) {
+          return snapshot.hasData
+            ? PrayersTimeWidget(pTime: snapshot.data)
+            : Center(child: CircularProgressIndicator());
+        },
       ),
+    );
+  }
+}
+
+class PrayersTimeWidget extends StatelessWidget {
+  final PTime pTime;
+
+  PrayersTimeWidget({
+    Key key,
+    @required this.pTime
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: 'Imsak',
+            time: pTime.imsak,
+            color: Colors.indigoAccent
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: 'Subuh',
+            time: pTime.subuh,
+            color: Colors.blueAccent
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: 'Dzuhur',
+            time: pTime.dzuhur,
+            color: Colors.yellow[700]
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: '\'Ashar',
+            time: pTime.ashar,
+            color: Colors.orangeAccent
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: 'Maghrib',
+            time: pTime.maghrib,
+            color: Colors.redAccent
+          ),
+        ),
+        SizedBox(height: 8.0),
+        Expanded(
+          child: PrayerTimeWidget(
+            layout: 'column',
+            title: 'Isya',
+            time: pTime.isya,
+            color: Colors.purpleAccent
+          ),
+        )
+      ],
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-class PrayerTime {
+class PTime {
   String date;
   String imsak;
   String subuh;
@@ -11,7 +11,7 @@ class PrayerTime {
   String maghrib;
   String isya;
 
-  PrayerTime({
+  PTime({
     this.date,
     this.imsak,
     this.subuh,
@@ -23,8 +23,8 @@ class PrayerTime {
     this.isya,
   });
   
-  factory PrayerTime.fromJson(Map<String, dynamic> json) {
-    return PrayerTime(
+  factory PTime.fromJson(Map<String, dynamic> json) {
+    return PTime(
       date: DateFormat('MM-dd').format(DateTime.parse(json['query']['tanggal'])),
       imsak: json['jadwal']['data']['imsak'],
       subuh: json['jadwal']['data']['subuh'],
@@ -51,7 +51,7 @@ class PrayerTime {
     };
   }
 
-  PrayerTime.fromMap(Map<String, dynamic> map) {
+  PTime.fromMap(Map<String, dynamic> map) {
     date = map['date'];
     imsak = map['imsak'];
     subuh = map['subuh'];
