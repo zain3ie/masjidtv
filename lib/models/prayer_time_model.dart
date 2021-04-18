@@ -1,4 +1,7 @@
+import 'package:intl/intl.dart';
+
 class PrayerTime {
+  String date;
   String imsak;
   String subuh;
   String terbit;
@@ -9,6 +12,7 @@ class PrayerTime {
   String isya;
 
   PrayerTime({
+    this.date,
     this.imsak,
     this.subuh,
     this.terbit,
@@ -21,6 +25,7 @@ class PrayerTime {
   
   factory PrayerTime.fromJson(Map<String, dynamic> json) {
     return PrayerTime(
+      date: DateFormat('MM-dd').format(DateTime.parse(json['query']['tanggal'])),
       imsak: json['jadwal']['data']['imsak'],
       subuh: json['jadwal']['data']['subuh'],
       terbit: json['jadwal']['data']['terbit'],
@@ -30,5 +35,31 @@ class PrayerTime {
       maghrib: json['jadwal']['data']['maghrib'],
       isya: json['jadwal']['data']['isya'],
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'date': date,
+      'imsak': imsak,
+      'subuh': subuh,
+      'terbit': terbit,
+      'dhuha': dhuha,
+      'dzuhur': dzuhur,
+      'ashar': ashar,
+      'maghrib': maghrib,
+      'isya': isya,
+    };
+  }
+
+  PrayerTime.fromMap(Map<String, dynamic> map) {
+    date = map['date'];
+    imsak = map['imsak'];
+    subuh = map['subuh'];
+    terbit = map['terbit'];
+    dhuha = map['dhuha'];
+    dzuhur = map['dzuhur'];
+    ashar = map['ashar'];
+    maghrib = map['maghrib'];
+    isya = map['isya'];
   }
 }
