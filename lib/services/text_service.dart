@@ -8,8 +8,8 @@ Future getRunningText() async {
     await Permission.storage.request();
   }
 
-  File textFile = File('sdcard/masjidtv/running_text.txt');
-  List<String> text = await textFile.readAsLines().then((lines) => lines);
+  final File textFile = File('sdcard/masjidtv/running_text.txt');
+  final List<String> text = await textFile.readAsLines().then((text) => text);
   
   return text;
 }
