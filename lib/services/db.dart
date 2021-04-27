@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-String _tablePrayerTime = 'prayer_times';
+final String _tablePrayerTime = 'prayer_times';
 final String _columnDate = 'date';
 final String _columnLocationId = 'location_id';
 final String _columnImsak = 'imsak';
@@ -28,17 +28,17 @@ class DBProvider {
 	Future<Database> get database async {
 		if (_database != null) return _database;
 		
-		_database = await initDb();
+		_database = await _initDb();
 		return _database;
 	}
 	
-	initDb() async {
+	_initDb() async {
 		var _databasesPath = await getDatabasesPath();
-		String path = join(_databasesPath, "my.db");
-		return await openDatabase(path, version: 1, onCreate: populateDb);
+		String _path = join(_databasesPath, "my.db");
+		return await openDatabase(_path, version: 1, onCreate: _populateDb);
 	}
 	
-	void populateDb(Database database, int version) async {
+	void _populateDb(Database database, int version) async {
 		await database.execute(
 			'''
 				CREATE TABLE $_tablePrayerTime(
@@ -59,17 +59,17 @@ class DBProvider {
 	}
 	
 	insertPrayerTime(PTime prayerTime) async {
-		final db = await database;
-		await db.insert(_tablePrayerTime, prayerTime.toMap());
+		final Database _db = await database;
+		await _db.insert(_tablePrayerTime, prayerTime.toMap());
 	}
 	
 	selectPrayerTime() async {
-		final db = await database;
+		final Database _db = await database;
 		final SharedPreferences _prefs = await SharedPreferences.getInstance();
 		final int _locationId = _prefs.getInt('location_id');
 		final String _date = DateFormat('MM-dd').format(DateTime.now());
 		
-		var _result = await db.query(_tablePrayerTime,
+		var _result = await _db.query(_tablePrayerTime,
 			where: '$_columnLocationId = ? AND $_columnDate = ?',
 			whereArgs: [_locationId, _date]
 		);
@@ -81,11 +81,11 @@ class DBProvider {
 	}
 	
 	selectLatestPrayerTime() async {
-		final db = await database;
+		final Database _db = await database;
 		final SharedPreferences _prefs = await SharedPreferences.getInstance();
 		final int _locationId = _prefs.getInt('location_id');
 		
-		var _result = await db.query(_tablePrayerTime,
+		var _result = await _db.query(_tablePrayerTime,
 			orderBy: '$_columnDate DESC',
 			where: '$_columnLocationId = ?',
 			whereArgs: [_locationId],
