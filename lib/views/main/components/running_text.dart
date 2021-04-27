@@ -9,13 +9,15 @@ class RunningText extends StatelessWidget {
       height: 20.0,
       width: double.infinity,
       color: Colors.black,
-      child: FutureBuilder(
+      child: FutureBuilder<List<String>>(
         future: getRunningText(),
         builder: (context, snapshot) {
-          return Marquee(
-            text: snapshot.data.join(' ● ') + ' ● ',
-            style: TextStyle(color: Colors.white),
-          );
+          return snapshot.hasData
+            ? Marquee(
+              text: snapshot.data.join(' ● ') + ' ● ',
+              style: TextStyle(color: Colors.white),
+            )
+            : Container();
         }
       ),
     );

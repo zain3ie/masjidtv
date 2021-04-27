@@ -1,25 +1,18 @@
 import 'dart:io';
 
+import 'package:masjid_tv/services/storage_service.dart';
 import 'package:mime/mime.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-Future getImage() async {
-  var status = await Permission.storage.status;
-  if (!status.isGranted) {
-    await Permission.storage.request();
-  }
-
-  final Directory dir = Directory('sdcard/masjidtv');
-  final List<FileSystemEntity> files = await dir.list().toList();
+Future<List<FileSystemEntity>> getImage() async {
+  final Directory _dir = await getStorage();
+  final List<FileSystemEntity> _files = await _dir.list().toList();
   List<FileSystemEntity> imageFiles = <FileSystemEntity>[];
 
-  files.forEach((file) {
-    String mimeStr = lookupMimeType(file.path);
-    List<String> fileTypes = mimeStr.split('/');
+  _files.forEach((file) {
+    String _mimeStr = lookupMimeType(file.path);
+    List<String> _fileTypes = _mimeStr.split('/');
     
-    if (fileTypes[0] == 'image') {
-      imageFiles.add(file);
-    }
+    if (_fileTypes.first == 'image') imageFiles.add(file);
   });
   
   return imageFiles;

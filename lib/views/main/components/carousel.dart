@@ -9,12 +9,12 @@ class Carousel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: FutureBuilder(
+      child: FutureBuilder<List<FileSystemEntity>>(
         future: getImage(),
         builder: (context, snapshot) {
           return snapshot.hasData
             ? CarouselWidget(imageFiles: snapshot.data)
-            : Center(child: CircularProgressIndicator());
+            : Container();
         }
       )
     );

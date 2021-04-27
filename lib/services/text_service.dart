@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:permission_handler/permission_handler.dart';
+import 'package:masjid_tv/services/storage_service.dart';
 
-Future getRunningText() async {
-  var status = await Permission.storage.status;
-  if (!status.isGranted) {
-    await Permission.storage.request();
-  }
-
-  final File textFile = File('sdcard/masjidtv/running_text.txt');
-  final List<String> text = await textFile.readAsLines().then((text) => text);
+Future<List<String>> getRunningText() async {
+  final Directory _dir = await getStorage();
+  final String _dirPath = _dir.path;
+  final File _textFile = File('$_dirPath/running_text.txt');
+  final List<String> text = await _textFile.readAsLines();
   
   return text;
 }
