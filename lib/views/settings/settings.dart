@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:masjid_tv/services/ptime_service.dart';
 import 'package:masjid_tv/utils/routers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -91,7 +92,7 @@ class _SettingsState extends State<_Settings> {
             ),
             onTap: () {
               Navigator.of(context).pushNamed(MyRouter.layoutSetting).then(
-                  (_) => setState(() {})
+                (_) => setState(() {})
               );
             },
           ),
@@ -101,10 +102,11 @@ class _SettingsState extends State<_Settings> {
               title: Text('Lokasi'),
               subtitle: Text(widget.prefs.getString('location')),
             ),
-            onTap: () {
-              Navigator.of(context).pushNamed(MyRouter.locationSetting).then(
-                  (_) => setState(() {})
-              );
+            onTap: () async {
+              Navigator.of(context).pushNamed(MyRouter.locationSetting).then((_) async {
+                 await fetchingPrayerTime();
+                 setState(() {});
+              });
             },
           ),
           Divider(),

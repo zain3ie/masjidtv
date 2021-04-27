@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 class PTime {
+  int locationId;
   String date;
   String imsak;
   String subuh;
@@ -12,6 +13,7 @@ class PTime {
   String isya;
 
   PTime({
+    this.locationId,
     this.date,
     this.imsak,
     this.subuh,
@@ -23,8 +25,9 @@ class PTime {
     this.isya,
   });
   
-  factory PTime.fromJson(Map<String, dynamic> json) {
+  factory PTime.fromJson(int locationId, Map<String, dynamic> json) {
     return PTime(
+      locationId: locationId,
       date: DateFormat('MM-dd').format(DateTime.parse(json['query']['tanggal'])),
       imsak: json['jadwal']['data']['imsak'],
       subuh: json['jadwal']['data']['subuh'],
@@ -39,6 +42,7 @@ class PTime {
 
   Map<String, dynamic> toMap() {
     return {
+      'location_id': locationId,
       'date': date,
       'imsak': imsak,
       'subuh': subuh,
@@ -52,6 +56,7 @@ class PTime {
   }
 
   PTime.fromMap(Map<String, dynamic> map) {
+    locationId = map['location_id'];
     date = map['date'];
     imsak = map['imsak'];
     subuh = map['subuh'];
