@@ -6,12 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:masjid_tv/models/city_model.dart';
 import 'package:masjid_tv/utils/urls.dart';
 
-Future getCityList() async {
+Future<List<City>> getCityList() async {
   String _server = Url.cities;
-  Duration timeOut = Duration(seconds: 10);
+  Duration _timeOut = Duration(seconds: 10);
 
   try {
-    final _response = await http.get(Uri.parse(_server)).timeout(timeOut);
+    final _response = await http.get(Uri.parse(_server)).timeout(_timeOut);
 
     return compute(parseCityData, _response.body);
   }
@@ -21,7 +21,6 @@ Future getCityList() async {
 }
 
 List<City> parseCityData(String responseBody) {
-  final parsed = json.decode(responseBody);
-  
-  return Cities.fromJson(parsed).data;
+  final _jsonResponse = json.decode(responseBody);
+  return Cities.fromJson(_jsonResponse).data;
 }
