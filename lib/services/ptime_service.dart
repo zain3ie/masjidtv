@@ -24,7 +24,7 @@ Future fetchingPrayerTime() async {
   
   while (_date != DateTime(2021, 1, 1)) {
     try {
-      fetchingData(_date);
+      await fetchingData(_date);
     }
     on TimeoutException {
       throw('Jaringan internet tidak stabil');
