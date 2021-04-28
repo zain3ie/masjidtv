@@ -4,18 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:masjid_tv/utils/hijriyah.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Header extends StatefulWidget {
-  @override
-  _HeaderState createState() => _HeaderState();
-}
-
-class _HeaderState extends State<Header> {
+class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting('id_ID', null);
 
     return Container(
       width: double.infinity,
+      padding: EdgeInsets.all(8.0),
       color: Colors.black,
       child: Row(
         children: [
@@ -27,15 +23,24 @@ class _HeaderState extends State<Header> {
                   children: [
                     Text(
                       DateFormat('EEEE', 'ID_id').format(DateTime.now()),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16.0,
+                      ),
                     ),
                     Text(
                       DateFormat('d MMMM yyyy', 'ID_id').format(DateTime.now()),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.0,
+                      ),
                     ),
                     Text(
                       hijriyahDate(),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12.0,
+                      ),
                     ),
                   ],
                 ),
@@ -54,6 +59,7 @@ class _HeaderState extends State<Header> {
                         ? snapshot.data.getString('masjid_name')
                         : '',
                       style: TextStyle(
+                        fontWeight: FontWeight.bold,
                         fontSize: 30.0,
                         color: Colors.white
                       ),
@@ -70,7 +76,10 @@ class _HeaderState extends State<Header> {
               builder: (context, snapshot) {
                 return Text(
                   DateFormat('hh:mm:ss').format(DateTime.now()),
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20.0
+                  ),
                 );
               },
             ),

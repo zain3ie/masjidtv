@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:masjid_tv/models/ptime_model.dart';
 import 'package:masjid_tv/services/db.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayerTime extends StatelessWidget {
   final String layout;
@@ -14,7 +15,7 @@ class PrayerTime extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
       child: FutureBuilder(
         future: DBProvider.db.selectPrayerTime(),
         builder: (context, snapshot) {
@@ -37,75 +38,78 @@ class PrayersTimeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: 'Imsak',
-            time: pTime.imsak ?? '',
-            color: Colors.indigoAccent
-          ),
+    final List<Widget> _prayerTimeWidgets = [
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: 'Imsak',
+          time: pTime.imsak ?? '',
+          color: Colors.indigoAccent
         ),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: 'Subuh',
-            time: pTime.subuh ?? '',
-            color: Colors.blueAccent
-          ),
+      ),
+      SizedBox(width: 16.0, height: 8.0),
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: 'Subuh',
+          time: pTime.subuh ?? '',
+          color: Colors.blueAccent
         ),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: 'Dzuhur',
-            time: pTime.dzuhur ?? '',
-            color: Colors.yellow[700]
-          ),
+      ),
+      SizedBox(width: 16.0, height: 8.0),
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: 'Dzuhur',
+          time: pTime.dzuhur ?? '',
+          color: Colors.yellow[700]
         ),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: '\'Ashar',
-            time: pTime.ashar ?? '',
-            color: Colors.orangeAccent
-          ),
+      ),
+      SizedBox(width: 16.0, height: 8.0),
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: '\'Ashar',
+          time: pTime.ashar ?? '',
+          color: Colors.orangeAccent
         ),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: 'Maghrib',
-            time: pTime.maghrib ?? '',
-            color: Colors.redAccent
-          ),
+      ),
+      SizedBox(width: 16.0, height: 8.0),
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: 'Maghrib',
+          time: pTime.maghrib ?? '',
+          color: Colors.redAccent
         ),
-        SizedBox(height: 8.0),
-        Expanded(
-          child: PrayerTimeWidget(
-            layout: 'column',
-            title: 'Isya',
-            time: pTime.isya ?? '',
-            color: Colors.purpleAccent
-          ),
+      ),
+      SizedBox(width: 16.0, height: 8.0),
+      Expanded(
+        child: _PrayerTimeWidget(
+          title: 'Isya',
+          time: pTime.isya ?? '',
+          color: Colors.purpleAccent
         ),
-      ],
+      ),
+    ];
+    
+    return FutureBuilder<SharedPreferences>(
+      future: SharedPreferences.getInstance(),
+      builder: (context, snapshot) {
+        return snapshot.hasData
+          ? snapshot.data.getString('layout') == 'Landscape'
+          ? Column(children: _prayerTimeWidgets)
+          : snapshot.data.getString('layout') == 'Portrait'
+          ? Row(children: _prayerTimeWidgets)
+          : Container()
+          : Container();
+      }
     );
   }
 }
 
-class PrayerTimeWidget extends StatelessWidget {
-  final String layout;
+class _PrayerTimeWidget extends StatelessWidget {
   final String title;
   final String time;
   final Color color;
 
-  PrayerTimeWidget({
+  _PrayerTimeWidget({
     Key key,
-    @required this.layout,
     @required this.title,
     @required this.time,
     @required this.color
@@ -115,6 +119,7 @@ class PrayerTimeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 100.0,
+      padding: EdgeInsets.symmetric(vertical: 8.0),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.all(Radius.circular(8.0)),

@@ -48,6 +48,7 @@ class _LayoutSettingState extends State<_LayoutSetting> {
                 children: [
                   Image(image: AssetImage('assets/layout_landscape.png')),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Radio<String>(
                         value: 'Landscape',
@@ -71,6 +72,7 @@ class _LayoutSettingState extends State<_LayoutSetting> {
                 children: [
                   Image(image: AssetImage('assets/layout_portrait.png')),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Radio<String>(
                         value: 'Portrait',

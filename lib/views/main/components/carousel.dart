@@ -42,7 +42,8 @@ class CarouselWidget extends StatelessWidget {
             return Container(
               width: MediaQuery.of(context).size.width,
               child: Image.file(
-                File(imageFile.path)
+                File(imageFile.path),
+                fit: BoxFit.cover,
               )
             );
           },

@@ -4,13 +4,15 @@ import 'package:masjid_tv/views/main/components/header.dart';
 import 'package:masjid_tv/views/main/components/prayer_time.dart';
 import 'package:masjid_tv/views/main/components/running_text.dart';
 
-class Layout1 extends StatefulWidget {
-  @override
-  _Layout1State createState() => _Layout1State();
-}
+class Landscape extends StatelessWidget {
+  final Function() notifyParent;
 
-class _Layout1State extends State<Layout1> {
-  refresh() => setState(() {});
+  Landscape({
+    Key key,
+    @required this.notifyParent
+  }) : super(key: key);
+  
+  refresh() => notifyParent();
   
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,15 @@ class _Layout1State extends State<Layout1> {
       children: <Widget>[
         Header(),
         Expanded(
-          child: Carousel(),
+          child: Row(
+            children: [
+              Expanded(
+                child: Carousel()
+              ),
+              PrayerTime(layout: 'column'),
+            ],
+          ),
         ),
-        PrayerTime(layout: 'row'),
         RunningText(notifyParent: refresh)
       ],
     );

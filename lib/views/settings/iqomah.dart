@@ -94,7 +94,8 @@ class _IqomahSettingWidgetState extends State<_IqomahSettingWidget> {
                     setState(() {});
                   }
                 ),
-                // Text('Menit'),
+                SizedBox(width: 16.0),
+                Text('Menit'),
               ],
             )
           ),

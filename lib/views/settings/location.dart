@@ -45,11 +45,20 @@ class _CityList extends StatefulWidget {
 }
 
 class _CityListState extends State<_CityList> {
-  TextEditingController searchCtrl = TextEditingController();
+  TextEditingController _searchCtrl = TextEditingController();
+  String _filter;
   
   @override
   initState() {
-    searchCtrl.text = widget.prefs.getString('location');
+    _searchCtrl.text = widget.prefs.getString('location');
+    _filter = _searchCtrl.text;
+
+    _searchCtrl.addListener(() {
+      setState(() {
+        _filter = _searchCtrl.text;
+      });
+    });
+    
     super.initState();
   }
   
@@ -60,7 +69,7 @@ class _CityListState extends State<_CityList> {
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: TextField(
-            controller: searchCtrl,
+            controller: _searchCtrl,
             decoration: InputDecoration(
               hintText: 'Cari nama kota',
             ),
@@ -72,10 +81,10 @@ class _CityListState extends State<_CityList> {
             itemBuilder: (context, index) {
               City city = widget.cities[index];
               
-              return searchCtrl.text == null || searchCtrl.text == ''
+              return _filter == null || _filter == ''
                 ? Container()
-                : city.name.contains(searchCtrl.text.toUpperCase())
-                ? _City(city: city, prefs: widget.prefs, searchCtrl: searchCtrl)
+                : city.name.contains(_searchCtrl.text.toUpperCase())
+                ? _City(city: city, prefs: widget.prefs, searchCtrl: _searchCtrl)
                 : Container();
             }
           ),

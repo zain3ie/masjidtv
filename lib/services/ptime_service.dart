@@ -23,7 +23,7 @@ Future fetchingPrayerTime() async {
     _date = _latestDate.add(Duration(days: 1));
   }
   
-  while (_date != DateTime(2020, 5, 31)) {
+  while (_date != DateTime(2021, 12, 31)) {
     try {
       await fetchingData(_date);
     }
@@ -45,7 +45,6 @@ Future fetchingData(DateTime date) async {
   final String _server = Url.schedule + '/kota/$_locationId/tanggal/$_dateStr';
   final http.Response _response = await http.get(Uri.parse(_server)).timeout(Duration(seconds: 10));
   final Map<String, dynamic> _jsonData = json.decode(_response.body);
-  print(_server);
 
   final PTime pTime = PTime.fromJson(_locationId, _jsonData);
   

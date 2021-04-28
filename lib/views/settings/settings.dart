@@ -84,7 +84,7 @@ class _SettingsState extends State<_Settings> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CircularProgressIndicator(
-                  backgroundColor: Colors.white
+                  backgroundColor: Colors.white,
                 ),
                 SizedBox(height: 32.0),
                 Text(
