@@ -43,7 +43,7 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: 'Imsak',
-            time: pTime.imsak,
+            time: pTime.imsak ?? '',
             color: Colors.indigoAccent
           ),
         ),
@@ -52,7 +52,7 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: 'Subuh',
-            time: pTime.subuh,
+            time: pTime.subuh ?? '',
             color: Colors.blueAccent
           ),
         ),
@@ -61,7 +61,7 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: 'Dzuhur',
-            time: pTime.dzuhur,
+            time: pTime.dzuhur ?? '',
             color: Colors.yellow[700]
           ),
         ),
@@ -70,7 +70,7 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: '\'Ashar',
-            time: pTime.ashar,
+            time: pTime.ashar ?? '',
             color: Colors.orangeAccent
           ),
         ),
@@ -79,7 +79,7 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: 'Maghrib',
-            time: pTime.maghrib,
+            time: pTime.maghrib ?? '',
             color: Colors.redAccent
           ),
         ),
@@ -88,10 +88,10 @@ class PrayersTimeWidget extends StatelessWidget {
           child: PrayerTimeWidget(
             layout: 'column',
             title: 'Isya',
-            time: pTime.isya,
+            time: pTime.isya ?? '',
             color: Colors.purpleAccent
           ),
-        )
+        ),
       ],
     );
   }

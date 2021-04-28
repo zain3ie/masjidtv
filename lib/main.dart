@@ -20,9 +20,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: FutureBuilder(
-        future: _setInitialPreferences(),
+        future: _checkPreferences(),
         builder: (context, snapshot) {
-          return SettingsView();
+          return snapshot.hasData
+            ? snapshot.data
+            ? MainDisplay()
+            : SettingsView()
+            : Container();
         }
       ),
       routes: <String, WidgetBuilder>{
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Future _setInitialPreferences() async {
+Future _checkPreferences() async {
   SharedPreferences _prefs = await SharedPreferences.getInstance();
 
   if (!_prefs.containsKey('masjid_name')) {
@@ -49,5 +53,9 @@ Future _setInitialPreferences() async {
     _prefs.setInt('iqomah_ashar', 5);
     _prefs.setInt('iqomah_maghrib', 5);
     _prefs.setInt('iqomah_isya', 5);
+    
+    return false;
   }
+  
+  return true;
 }

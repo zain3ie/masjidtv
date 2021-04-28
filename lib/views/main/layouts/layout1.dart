@@ -4,7 +4,14 @@ import 'package:masjid_tv/views/main/components/header.dart';
 import 'package:masjid_tv/views/main/components/prayer_time.dart';
 import 'package:masjid_tv/views/main/components/running_text.dart';
 
-class Layout1 extends StatelessWidget {
+class Layout1 extends StatefulWidget {
+  @override
+  _Layout1State createState() => _Layout1State();
+}
+
+class _Layout1State extends State<Layout1> {
+  refresh() => setState(() {});
+  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -14,7 +21,7 @@ class Layout1 extends StatelessWidget {
           child: Carousel(),
         ),
         PrayerTime(layout: 'row'),
-        RunningText()
+        RunningText(notifyParent: refresh)
       ],
     );
   }

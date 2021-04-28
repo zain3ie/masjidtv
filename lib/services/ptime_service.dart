@@ -23,7 +23,7 @@ Future fetchingPrayerTime() async {
     _date = _latestDate.add(Duration(days: 1));
   }
   
-  while (_date != DateTime(2020, 1, 10)) {
+  while (_date != DateTime(2020, 5, 31)) {
     try {
       await fetchingData(_date);
     }
