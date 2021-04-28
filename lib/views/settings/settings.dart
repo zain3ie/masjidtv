@@ -37,6 +37,8 @@ class _Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<_Settings> {
+  bool _isFetchingData = false;
+  
   Future<void> _renameDialog() async {
     TextEditingController _masjidNameCtrl = TextEditingController();
     _masjidNameCtrl.text = widget.prefs.getString('masjid_name');
@@ -72,54 +74,80 @@ class _SettingsState extends State<_Settings> {
   
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          InkWell(
-            child: ListTile(
-              title: Text('Nama Masjid'),
-              subtitle: Text(widget.prefs.getString('masjid_name')),
-            ),
-            onTap: () {
-              _renameDialog();
-            },
+    return Stack(
+      children: [
+        _isFetchingData
+        ? Container(
+          color: Colors.green,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(
+                  backgroundColor: Colors.white
+                ),
+                SizedBox(height: 32.0),
+                Text(
+                  'Mengambil data waktu sholat',
+                  style: TextStyle(
+                    color: Colors.white
+                  ),
+                )
+              ],
+            )
           ),
-          Divider(),
-          InkWell(
-            child: ListTile(
-              title: Text('Layout'),
-              subtitle: Text(widget.prefs.getString('layout')),
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(MyRouter.layoutSetting).then(
-                (_) => setState(() {})
-              );
-            },
-          ),
-          Divider(),
-          InkWell(
-            child: ListTile(
-              title: Text('Lokasi'),
-              subtitle: Text(widget.prefs.getString('location')),
-            ),
-            onTap: () async {
-              Navigator.of(context).pushNamed(MyRouter.locationSetting).then((_) async {
-                 await fetchingPrayerTime();
-                 setState(() {});
-              });
-            },
-          ),
-          Divider(),
-          InkWell(
-            child: ListTile(
-              title: Text('Waktu Iqomah')
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(MyRouter.iqomahSetting);
-            },
-          ),
-        ],
-      )
+        )
+        : SingleChildScrollView(
+          child: Column(
+            children: [
+              InkWell(
+                child: ListTile(
+                  title: Text('Nama Masjid'),
+                  subtitle: Text(widget.prefs.getString('masjid_name')),
+                ),
+                onTap: () {
+                  _renameDialog();
+                },
+              ),
+              Divider(),
+              InkWell(
+                child: ListTile(
+                  title: Text('Layout'),
+                  subtitle: Text(widget.prefs.getString('layout')),
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(MyRouter.layoutSetting).then(
+                    (_) => setState(() {})
+                  );
+                },
+              ),
+              Divider(),
+              InkWell(
+                child: ListTile(
+                  title: Text('Lokasi'),
+                  subtitle: Text(widget.prefs.getString('location')),
+                ),
+                onTap: () async {
+                  Navigator.of(context).pushNamed(MyRouter.locationSetting).then((_) async {
+                    setState(() => _isFetchingData = true);
+                    await fetchingPrayerTime();
+                    setState(() => _isFetchingData = false);
+                  });
+                },
+              ),
+              Divider(),
+              InkWell(
+                child: ListTile(
+                  title: Text('Waktu Iqomah')
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed(MyRouter.iqomahSetting);
+                },
+              ),
+            ],
+          )
+        ),
+      ],
     );
   }
 }

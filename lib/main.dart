@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:masjid_tv/utils/routers.dart';
 import 'package:masjid_tv/views/main/main_display.dart';

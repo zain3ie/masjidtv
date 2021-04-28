@@ -14,15 +14,16 @@ Future fetchingPrayerTime() async {
   final PTime _latestPrayerTime = await DBProvider.db.selectLatestPrayerTime();
 
   if (_latestPrayerTime.date == null) {
-    _date = DateTime(2020, 1, 1);
+    _date = DateTime(2019, 12, 31);
   }
   else {
     List<String> _latestDateStr = _latestPrayerTime.date.split('-');
-    List<int> _latestDate = _latestDateStr.map((date) => int.parse(date)).toList();
-    _date = DateTime(2020, _latestDate[0], _latestDate[1]);
+    List<int> _latestDateInt = _latestDateStr.map((date) => int.parse(date)).toList();
+    DateTime _latestDate = DateTime(2020, _latestDateInt[0], _latestDateInt[1]);
+    _date = _latestDate.add(Duration(days: 1));
   }
   
-  while (_date != DateTime(2021, 1, 1)) {
+  while (_date != DateTime(2020, 1, 10)) {
     try {
       await fetchingData(_date);
     }
@@ -44,6 +45,8 @@ Future fetchingData(DateTime date) async {
   final String _server = Url.schedule + '/kota/$_locationId/tanggal/$_dateStr';
   final http.Response _response = await http.get(Uri.parse(_server)).timeout(Duration(seconds: 10));
   final Map<String, dynamic> _jsonData = json.decode(_response.body);
+  print(_server);
+
   final PTime pTime = PTime.fromJson(_locationId, _jsonData);
   
   await DBProvider.db.insertPrayerTime(pTime);
