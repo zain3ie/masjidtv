@@ -58,12 +58,12 @@ class DBProvider {
 		);
 	}
 	
-	insertPrayerTime(PTime prayerTime) async {
+	Future insertPrayerTime(PTime prayerTime) async {
 		final Database _db = await database;
 		await _db.insert(_tablePrayerTime, prayerTime.toMap());
 	}
 	
-	selectPrayerTime() async {
+	Future selectPrayerTime() async {
 		final Database _db = await database;
 		final SharedPreferences _prefs = await SharedPreferences.getInstance();
 		final int _locationId = _prefs.getInt('location_id');
@@ -80,7 +80,7 @@ class DBProvider {
 		return prayerTime;
 	}
 	
-	selectLatestPrayerTime() async {
+	Future selectLatestPrayerTime() async {
 		final Database _db = await database;
 		final SharedPreferences _prefs = await SharedPreferences.getInstance();
 		final int _locationId = _prefs.getInt('location_id');
