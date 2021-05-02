@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:masjid_tv/utils/routers.dart';
 import 'package:masjid_tv/views/main/main_display.dart';
 import 'package:masjid_tv/views/settings/iqomah.dart';
@@ -14,28 +15,33 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Masjid TV',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: FutureBuilder(
-        future: _checkPreferences(),
-        builder: (context, snapshot) {
-          return snapshot.hasData
-            ? snapshot.data
-            ? MainDisplay()
-            : SettingsView()
-            : Container();
+    return Shortcuts(
+      shortcuts: <LogicalKeySet, Intent>{
+        LogicalKeySet(LogicalKeyboardKey.select): ActivateIntent()
+      },
+      child: MaterialApp(
+        title: 'Masjid TV',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home: FutureBuilder(
+          future: _checkPreferences(),
+          builder: (context, snapshot) {
+            return snapshot.hasData
+              ? snapshot.data
+              ? MainDisplay()
+              : SettingsView()
+              : Container();
+          }
+        ),
+        routes: <String, WidgetBuilder>{
+          MyRouter.main : (BuildContext context) => MainDisplay(),
+          MyRouter.setting : (BuildContext context) => SettingsView(),
+          MyRouter.layoutSetting : (BuildContext context) => LayoutSetting(),
+          MyRouter.locationSetting : (BuildContext context) => LocationSetting(),
+          MyRouter.iqomahSetting : (BuildContext context) => IqomahSetting(),
         }
       ),
-      routes: <String, WidgetBuilder>{
-        MyRouter.main : (BuildContext context) => MainDisplay(),
-        MyRouter.setting : (BuildContext context) => SettingsView(),
-        MyRouter.layoutSetting : (BuildContext context) => LayoutSetting(),
-        MyRouter.locationSetting : (BuildContext context) => LocationSetting(),
-        MyRouter.iqomahSetting : (BuildContext context) => IqomahSetting(),
-      }
     );
   }
 }

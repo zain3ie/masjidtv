@@ -5,15 +5,6 @@ import 'package:masjid_tv/views/main/components/prayer_time.dart';
 import 'package:masjid_tv/views/main/components/running_text.dart';
 
 class Landscape extends StatelessWidget {
-  final Function() notifyParent;
-
-  Landscape({
-    Key key,
-    @required this.notifyParent
-  }) : super(key: key);
-  
-  refresh() => notifyParent();
-  
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,11 +16,11 @@ class Landscape extends StatelessWidget {
               Expanded(
                 child: Carousel()
               ),
-              PrayerTime(layout: 'column'),
+              PrayerTime(),
             ],
           ),
         ),
-        RunningText(notifyParent: refresh)
+        RunningText()
       ],
     );
   }

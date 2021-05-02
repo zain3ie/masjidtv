@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:masjid_tv/models/ptime_model.dart';
 import 'package:masjid_tv/services/db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayerTime extends StatelessWidget {
-  final String layout;
-  
-  PrayerTime({
-    Key key,
-    @required this.layout
-  }) : super(key: key);
-  
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.black,
       padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-      child: StreamBuilder(
-        stream: Stream.periodic(const Duration(hours: 1)),
+      decoration: BoxDecoration(
+        color: Colors.black,
+        border: Border.all(width: 0, color: Colors.black),
+      ),
+      child: FutureBuilder(
+        future: DBProvider.db.selectPrayerTime(),
         builder: (context, snapshot) {
-          return FutureBuilder(
-            future: DBProvider.db.selectPrayerTime(),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                ? PrayersTimeWidget(pTime: snapshot.data)
-                : Center(child: CircularProgressIndicator());
-            },
-          );
-        }
+          return snapshot.hasData
+            ? PrayersTimeWidget(pTime: snapshot.data)
+            : Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }

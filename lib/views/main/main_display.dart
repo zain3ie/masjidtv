@@ -45,8 +45,6 @@ class _MainDisplay extends StatefulWidget {
 }
 
 class _MainDisplayState extends State<_MainDisplay> {
-  refresh() => setState(() {});
-
   List _prayTimes(String prayer, String prayerTime, int iqomahTime) {
     final DateTime _now = DateTime.now();
     final String _date = DateFormat('yyyy-MM-dd').format(_now);
@@ -105,9 +103,9 @@ class _MainDisplayState extends State<_MainDisplay> {
       : _iqomah.inSeconds > 0
       ? _IqomahCountdown(countDown: _iqomah)
       : widget.prefs.getString('layout') == 'Landscape'
-      ? Landscape(notifyParent: refresh)
+      ? Landscape()
       : widget.prefs.getString('layout') == 'Portrait'
-      ? Portrait(notifyParent: refresh)
+      ? Portrait()
       : Container();
   }
 }
@@ -122,18 +120,50 @@ class _AdzanTime extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Center(
-        child: Text(
-          'Adzan $prayer',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 48.0,
-            fontWeight: FontWeight.bold
+    int _second = int.parse(DateFormat('s').format(DateTime.now()));
+    
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 64.0,
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border.all(width: 0, color: Colors.black),
+          ),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              DateFormat('hh:mm:ss').format(DateTime.now()),
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20.0
+              ),
+            ),
           ),
         ),
-      ),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(width: 0, color: Colors.black),
+            ),
+            child: Center(
+              child: _second % 2 == 0
+              ? Text(
+                'Adzan $prayer',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 96.0,
+                  fontWeight: FontWeight.bold
+                ),
+              )
+              : Container()
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -148,32 +178,60 @@ class _IqomahCountdown extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              countDown.inMinutes.remainder(60).toString() + ':' +
-              countDown.inSeconds.remainder(60).toString().padLeft(2, '0'),
+    return Column(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 64.0,
+          padding: EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: Colors.black,
+            border: Border.all(width: 0, color: Colors.black),
+          ),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              DateFormat('hh:mm:ss').format(DateTime.now()),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 64.0,
-                fontWeight: FontWeight.bold
+                fontSize: 20.0
               ),
             ),
-            SizedBox(height: 32.0),
-            Text(
-              'Menuju Iqomah',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24.0
-              ),
-            )
-          ],
+          ),
         ),
-      ),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(width: 0, color: Colors.black),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    countDown.inMinutes.remainder(60).toString() + ':' +
+                    countDown.inSeconds.remainder(60).toString().padLeft(2, '0'),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 128.0,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  SizedBox(height: 32.0),
+                  Text(
+                    'Menuju Iqomah',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 48.0
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

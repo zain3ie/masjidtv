@@ -11,41 +11,38 @@ class Header extends StatelessWidget {
 
     return Container(
       width: double.infinity,
+      height: 64.0,
       padding: EdgeInsets.all(8.0),
-      color: Colors.black,
+      decoration: BoxDecoration(
+        color: Colors.black,
+        border: Border.all(width: 0, color: Colors.black),
+      ),
       child: Row(
         children: [
-          StreamBuilder(
-            stream: Stream.periodic(const Duration(seconds: 1)),
-            builder: (context, snapshot) {
-              return Container(
-                child: Column(
-                  children: [
-                    Text(
-                      DateFormat('EEEE', 'ID_id').format(DateTime.now()),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                      ),
-                    ),
-                    Text(
-                      DateFormat('d MMMM yyyy', 'ID_id').format(DateTime.now()),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                    Text(
-                      hijriyahDate(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.0,
-                      ),
-                    ),
-                  ],
+          Column(
+            children: [
+              Text(
+                DateFormat('EEEE', 'ID_id').format(DateTime.now()),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
                 ),
-              );
-            }
+              ),
+              Text(
+                DateFormat('d MMMM yyyy', 'ID_id').format(DateTime.now()),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.0,
+                ),
+              ),
+              Text(
+                hijriyahDate(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12.0,
+                ),
+              ),
+            ]
           ),
           
           Expanded(
@@ -70,18 +67,11 @@ class Header extends StatelessWidget {
             ),
           ),
           
-          Container(
-            child: StreamBuilder(
-              stream: Stream.periodic(const Duration(seconds: 1)),
-              builder: (context, snapshot) {
-                return Text(
-                  DateFormat('hh:mm:ss').format(DateTime.now()),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20.0
-                  ),
-                );
-              },
+          Text(
+            DateFormat('hh:mm:ss').format(DateTime.now()),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0
             ),
           ),
         ],
