@@ -1,4 +1,6 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Data gambar slideshow dan running text berada dalam folder "masjidtv" di internal storage
+Slideshow di atas menampilkan semua file gambar yang ada pada folder "masjidtv"
+Untuk mengganti gambar slideshow, silahkan langsung ganti file gambar yang ada di "masjidtv"
+Running text ini menampilkan setiap kalimat yang ada pada file "running_text.txt" di folder "masjidtv"
+Setiap baris kalimat pada file "running_text.txt" akan dipisahkan secara otomatis
+Untuk menggati kalimat running text, silahkan edit file "running_text.txt" di folder "masjidtv"
