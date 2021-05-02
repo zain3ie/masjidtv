@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masjid_tv/services/ptime_service.dart';
+import 'package:masjid_tv/services/schedule_service.dart';
 import 'package:masjid_tv/utils/routers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -130,7 +130,7 @@ class _SettingsState extends State<_Settings> {
                 onTap: () async {
                   Navigator.of(context).pushNamed(MyRouter.locationSetting).then((_) async {
                     setState(() => _isFetchingData = true);
-                    await fetchingPrayerTime();
+                    await fetchSchedule();
                     setState(() => _isFetchingData = false);
                   });
                 },

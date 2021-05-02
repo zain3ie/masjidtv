@@ -1,6 +1,21 @@
 import 'package:intl/intl.dart';
 
-class PTime {
+class Schedules {
+  final List<Schedule> data;
+
+  Schedules({
+    this.data
+  });
+  
+  factory Schedules.fromJson(int locationId, Map<String, dynamic> json) {
+    var data = json['data']['jadwal'] as List;
+    List<Schedule> dataList = data.map((i) => Schedule.fromJson(locationId, i)).toList();
+
+    return Schedules(data: dataList);
+  }
+}
+
+class Schedule {
   int locationId;
   String date;
   String imsak;
@@ -12,7 +27,7 @@ class PTime {
   String maghrib;
   String isya;
 
-  PTime({
+  Schedule({
     this.locationId,
     this.date,
     this.imsak,
@@ -25,21 +40,21 @@ class PTime {
     this.isya,
   });
   
-  factory PTime.fromJson(int locationId, Map<String, dynamic> json) {
-    return PTime(
+  factory Schedule.fromJson(int locationId, Map<String, dynamic> json) {
+    return Schedule(
       locationId: locationId,
-      date: DateFormat('MM-dd').format(DateTime.parse(json['query']['tanggal'])),
-      imsak: json['jadwal']['data']['imsak'],
-      subuh: json['jadwal']['data']['subuh'],
-      terbit: json['jadwal']['data']['terbit'],
-      dhuha: json['jadwal']['data']['dhuha'],
-      dzuhur: json['jadwal']['data']['dzuhur'],
-      ashar: json['jadwal']['data']['ashar'],
-      maghrib: json['jadwal']['data']['maghrib'],
-      isya: json['jadwal']['data']['isya'],
+      date: DateFormat('MM-dd').format(DateTime.parse(json['date'])),
+      imsak: json['imsak'],
+      subuh: json['subuh'],
+      terbit: json['terbit'],
+      dhuha: json['dhuha'],
+      dzuhur: json['dzuhur'],
+      ashar: json['ashar'],
+      maghrib: json['maghrib'],
+      isya: json['isya'],
     );
   }
-
+  
   Map<String, dynamic> toMap() {
     return {
       'location_id': locationId,
@@ -55,7 +70,7 @@ class PTime {
     };
   }
 
-  PTime.fromMap(Map<String, dynamic> map) {
+  Schedule.fromMap(Map<String, dynamic> map) {
     locationId = map['location_id'];
     date = map['date'];
     imsak = map['imsak'];

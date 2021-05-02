@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:masjid_tv/models/ptime_model.dart';
+import 'package:masjid_tv/models/schedule_model.dart';
 import 'package:masjid_tv/services/db.dart';
 import 'package:masjid_tv/views/main/layouts/portrait.dart';
 import 'package:masjid_tv/views/main/layouts/landscape.dart';
@@ -20,7 +20,7 @@ class MainDisplay extends StatelessWidget {
             ]),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               return snapshot.hasData
-                ? _MainDisplay(pTime: snapshot.data[0], prefs: snapshot.data[1])
+                ? _MainDisplay(schedule: snapshot.data[0], prefs: snapshot.data[1])
                 : Container();
             }
           );
@@ -31,12 +31,12 @@ class MainDisplay extends StatelessWidget {
 }
 
 class _MainDisplay extends StatefulWidget {
-  final PTime pTime;
+  final Schedule schedule;
   final SharedPreferences prefs;
 
   _MainDisplay({
     Key key,
-    @required this.pTime,
+    @required this.schedule,
     @required this.prefs,
   }) : super(key: key);
   
@@ -45,20 +45,24 @@ class _MainDisplay extends StatefulWidget {
 }
 
 class _MainDisplayState extends State<_MainDisplay> {
-  List _prayTimes(String prayer, String prayerTime, int iqomahTime) {
-    final DateTime _now = DateTime.now();
-    final String _date = DateFormat('yyyy-MM-dd').format(_now);
+  List _prayTimes(String prayer, String schedule, int iqomahTime) {
+    if (schedule != null) {
+      final DateTime _now = DateTime.now();
+      final String _date = DateFormat('yyyy-MM-dd').format(_now);
   
-    final DateTime _start = DateTime.parse(_date + ' ' + prayerTime);
-    final DateTime _endAdzan = _start.add(Duration(minutes: 3));
-    final DateTime _endIqomah = _endAdzan.add(Duration(minutes: iqomahTime));
-    
-    if (_now.isAfter(_start) && _now.isBefore(_endAdzan)) {
-      return [prayer, _endAdzan.difference(_now), _endIqomah.difference(_now)];
+      final DateTime _start = DateTime.parse(_date + ' ' + schedule);
+      final DateTime _endAdzan = _start.add(Duration(minutes: 3));
+      final DateTime _endIqomah = _endAdzan.add(Duration(minutes: iqomahTime));
+  
+      if (_now.isAfter(_start) && _now.isBefore(_endAdzan)) {
+        return [prayer, _endAdzan.difference(_now), _endIqomah.difference(_now)];
+      }
+      else if (_now.isAfter(_endAdzan) && _now.isBefore(_endIqomah)) {
+        return [prayer, Duration(), _endIqomah.difference(_now)];
+      }
+      else return ['', Duration(), Duration()];
     }
-    else if (_now.isAfter(_endAdzan) && _now.isBefore(_endIqomah)) {
-      return [prayer, Duration(), _endIqomah.difference(_now)];
-    }
+
     else return ['', Duration(), Duration()];
   }
   
@@ -66,31 +70,31 @@ class _MainDisplayState extends State<_MainDisplay> {
   Widget build(BuildContext context) {
     List _subuh = _prayTimes(
       'Subuh',
-      widget.pTime.subuh,
+      widget.schedule.subuh,
       widget.prefs.getInt('iqomah_subuh')
     );
     
     List _dzuhur = _prayTimes(
       'Dzuhur',
-      widget.pTime.dzuhur,
+      widget.schedule.dzuhur,
       widget.prefs.getInt('iqomah_dzuhur')
     );
     
     List _ashar = _prayTimes(
       '\'Ashar',
-      widget.pTime.ashar,
+      widget.schedule.ashar,
       widget.prefs.getInt('iqomah_ashar')
     );
     
     List _maghrib = _prayTimes(
       'Maghrib',
-      widget.pTime.maghrib,
+      widget.schedule.maghrib,
       widget.prefs.getInt('iqomah_maghrib')
     );
     
     List _isya = _prayTimes(
       'Isya',
-      widget.pTime.isya,
+      widget.schedule.isya,
       widget.prefs.getInt('iqomah_isya')
     );
 

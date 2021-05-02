@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:intl/intl.dart';
-import 'package:masjid_tv/models/ptime_model.dart';
+import 'package:masjid_tv/models/schedule_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -58,9 +58,9 @@ class DBProvider {
 		);
 	}
 	
-	Future insertPrayerTime(PTime prayerTime) async {
+	Future insertPrayerTime(Schedule schedule) async {
 		final Database _db = await database;
-		await _db.insert(_tablePrayerTime, prayerTime.toMap());
+		await _db.insert(_tablePrayerTime, schedule.toMap());
 	}
 	
 	Future selectPrayerTime() async {
@@ -74,10 +74,10 @@ class DBProvider {
 			whereArgs: [_locationId, _date]
 		);
 		
-		PTime prayerTime = _result.isNotEmpty
-			? PTime.fromMap(_result.first) : new PTime();
+		Schedule schedule = _result.isNotEmpty
+			? Schedule.fromMap(_result.first) : new Schedule();
 		
-		return prayerTime;
+		return schedule;
 	}
 	
 	Future selectLatestPrayerTime() async {
@@ -92,9 +92,9 @@ class DBProvider {
 			limit: 1
 		);
 		
-		PTime prayerTime = _result.isNotEmpty
-			? PTime.fromMap(_result.first) : new PTime();
+		Schedule schedule = _result.isNotEmpty
+			? Schedule.fromMap(_result.first) : new Schedule();
 		
-		return prayerTime;
+		return schedule;
 	}
 }

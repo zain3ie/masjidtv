@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:masjid_tv/models/ptime_model.dart';
+import 'package:masjid_tv/models/schedule_model.dart';
 import 'package:masjid_tv/services/db.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,7 +16,7 @@ class PrayerTime extends StatelessWidget {
         future: DBProvider.db.selectPrayerTime(),
         builder: (context, snapshot) {
           return snapshot.hasData
-            ? PrayersTimeWidget(pTime: snapshot.data)
+            ? PrayersTimeWidget(schedule: snapshot.data)
             : Center(child: CircularProgressIndicator());
         },
       ),
@@ -25,11 +25,11 @@ class PrayerTime extends StatelessWidget {
 }
 
 class PrayersTimeWidget extends StatelessWidget {
-  final PTime pTime;
+  final Schedule schedule;
 
   PrayersTimeWidget({
     Key key,
-    @required this.pTime,
+    @required this.schedule,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: 'Imsak',
-          time: pTime.imsak ?? '',
+          time: schedule.imsak ?? '',
           color: Colors.indigoAccent
         ),
       ),
@@ -46,7 +46,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: 'Subuh',
-          time: pTime.subuh ?? '',
+          time: schedule.subuh ?? '',
           color: Colors.blueAccent
         ),
       ),
@@ -54,7 +54,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: 'Dzuhur',
-          time: pTime.dzuhur ?? '',
+          time: schedule.dzuhur ?? '',
           color: Colors.yellow[700]
         ),
       ),
@@ -62,7 +62,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: '\'Ashar',
-          time: pTime.ashar ?? '',
+          time: schedule.ashar ?? '',
           color: Colors.orangeAccent
         ),
       ),
@@ -70,7 +70,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: 'Maghrib',
-          time: pTime.maghrib ?? '',
+          time: schedule.maghrib ?? '',
           color: Colors.redAccent
         ),
       ),
@@ -78,7 +78,7 @@ class PrayersTimeWidget extends StatelessWidget {
       Expanded(
         child: _PrayerTimeWidget(
           title: 'Isya',
-          time: pTime.isya ?? '',
+          time: schedule.isya ?? '',
           color: Colors.purpleAccent
         ),
       ),

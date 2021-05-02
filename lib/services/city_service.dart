@@ -9,7 +9,7 @@ import 'package:masjid_tv/utils/urls.dart';
 Future<List<City>> getCityList() async {
   String _server = Url.cities;
   Duration _timeOut = Duration(seconds: 10);
-
+  
   try {
     final _response = await http.get(Uri.parse(_server)).timeout(_timeOut);
 
