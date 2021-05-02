@@ -9,7 +9,7 @@ Future<Directory> getStorage() async {
     await Permission.storage.request();
   }
   
-  final Directory dir = Directory('sdcard/masjidtv');
+  final Directory dir = Directory('/storage/emulated/0/masjidtv');
   
   if (!dir.existsSync()) {
     await dir.create(recursive: true);
