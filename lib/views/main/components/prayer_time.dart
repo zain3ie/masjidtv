@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:masjid_tv/models/schedule_model.dart';
-import 'package:masjid_tv/services/db.dart';
+import 'package:masjid_tv/services/db_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrayerTime extends StatelessWidget {

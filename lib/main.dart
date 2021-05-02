@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:masjid_tv/utils/routers.dart';
 import 'package:masjid_tv/views/main/main_display.dart';
-import 'package:masjid_tv/views/settings/iqomah.dart';
-import 'package:masjid_tv/views/settings/layout.dart';
-import 'package:masjid_tv/views/settings/location.dart';
 import 'package:masjid_tv/views/settings/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,13 +31,7 @@ class MyApp extends StatelessWidget {
               : Container();
           }
         ),
-        routes: <String, WidgetBuilder>{
-          MyRouter.main : (BuildContext context) => MainDisplay(),
-          MyRouter.setting : (BuildContext context) => SettingsView(),
-          MyRouter.layoutSetting : (BuildContext context) => LayoutSetting(),
-          MyRouter.locationSetting : (BuildContext context) => LocationSetting(),
-          MyRouter.iqomahSetting : (BuildContext context) => IqomahSetting(),
-        }
+        routes: MyRouter.routes
       ),
     );
   }

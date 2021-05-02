@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:masjid_tv/models/schedule_model.dart';
-import 'package:masjid_tv/services/db.dart';
+import 'package:masjid_tv/services/db_service.dart';
 import 'package:masjid_tv/views/main/layouts/portrait.dart';
 import 'package:masjid_tv/views/main/layouts/landscape.dart';
 import 'package:shared_preferences/shared_preferences.dart';
