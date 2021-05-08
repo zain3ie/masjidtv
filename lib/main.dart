@@ -25,9 +25,7 @@ class MyApp extends StatelessWidget {
           future: _checkPreferences(),
           builder: (context, snapshot) {
             return snapshot.hasData
-              ? snapshot.data
               ? MainDisplay()
-              : SettingsView()
               : Container();
           }
         ),
@@ -50,8 +48,6 @@ Future _checkPreferences() async {
     _prefs.setInt('iqomah_ashar', 5);
     _prefs.setInt('iqomah_maghrib', 5);
     _prefs.setInt('iqomah_isya', 5);
-    
-    return false;
   }
   
   return true;
